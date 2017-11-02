@@ -166,7 +166,7 @@ var ViewModel = function () {
 // Error function
 function mapError () {
   alert("Failed to load. Please check your internet connection and try again");
-};
+}
 
 $(document).ready(function () {
     if (MapView()) {

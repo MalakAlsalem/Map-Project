@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <meta charset="UTF-8">
-	    <meta name="viewport" content="initial-scale=1">
-	    <link rel="stylesheet" href="css/style.css">
-	    <link rel="stylesheet" href="css/bootstrap.css">
-	    <title> Neighborhood Map</title>	    
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<title> Neighborhood Map</title>	    
 	</head>
 	<body>
-	    <div class="container">
-	        <header class="row">
-	            <div class="col-md-12 content">
-	                <input class="textInput" data-bind="textInput: searchPlace" placeholder="Search Place">
-	                <ul id="list" data-bind='foreach: places'>
-	                    <li class="listElement">
-		                    <h5>
-		                    	<div data-bind="text: name, click: getPlace"></div>
-		                    </h5>
-		                </li>
-	                </ul>
-	            </div>
-	        </header>
-	        <section class="row">
-	            <div class="col-md-12" id="map"></div>
-	        </section>
-	        <script src="JS/jquery-3.2.1.js"> </script>
-	        <script src="JS/main.js"> </script>
-	        <script src="JS/knockout-3.3.0.js"></script>
-	        <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH-OXb-QWXJtANJzjn-nmpALbpY3Dh04Y" onerror="mapError()"></script>
-	    </div>
+		<div class="container">
+			<header class="row">
+				<div class="col-md-12 content">
+					<input class="textInput" data-bind="textInput: searchPlace" placeholder="Search Place">
+					<ul id="list" data-bind='foreach: places'>
+						<li class="listElement">
+						<h5>
+						<div data-bind="text: name, click: getPlace"></div>
+						</h5>
+						</li>
+					</ul>
+				</div>
+			</header>
+			<section class="row">
+				<div class="col-md-12" id="map"></div>
+			</section>
+			<script src="JS/jquery-3.2.1.js"> </script>
+			<script src="JS/main.js"> </script>
+			<script src="JS/knockout-3.3.0.js"></script>
+			<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH-OXb-QWXJtANJzjn-nmpALbpY3Dh04Y" onerror="mapError()"></script>
+		</div>
 	</body>
 </html>

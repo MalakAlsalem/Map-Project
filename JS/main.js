@@ -1,19 +1,17 @@
 var map;
-var ShowInfo;
+var showInfo;
 
 //View Map
 var MapView = function () {
 
     // set the map center
-    var mapCenter = {
-        center: { lat: 24.713552, lng: 46.67529 },
-        zoom: 11,
-    };
-
-    map = new google.maps.Map(document.getElementById('map'), mapCenter);
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 24.765205, lng: 46.677100 },
+        zoom: 12,
+    });
 
     // infowindow
-    ShowInfo = new google.maps.InfoWindow({
+    showInfo = new google.maps.InfoWindow({
     });
 
     return true;
@@ -61,17 +59,17 @@ var ViewModel = function () {
             self.marker.setAnimation(google.maps.Animation.BOUNCE);
             setTimeout(function() {
                 self.marker.setAnimation(null);
-            }, 200);
+            }, 1400);
         });
 
         this.getPlace = function () {
             map.setCenter(self.marker.getPosition());
-            ShowInfo.setContent(self.info());
-            ShowInfo.open(map, self.marker);
+            showInfo.setContent(self.info());
+            showInfo.open(map, self.marker);
             self.marker.setAnimation(google.maps.Animation.BOUNCE);
             setTimeout(function() {
                 self.marker.setAnimation(null);
-            }, 200);
+            }, 1400);
         };
 
         // Set marker map
@@ -135,26 +133,24 @@ var ViewModel = function () {
             $.ajax({
                 url: wikiUrl,
                 dataType: 'jsonp',
-                success: function (response) {
-                    // replace wikInfo
-                    var newInfo = self.places()[index].wikiInfo();
-                    newInfo = newInfo.concat('<ul style="padding-left: 16px;">');
-                    var articleLst = response[1];
-                    for (var j = 0; j < articleLst.length; j++) {
-                        if (j > 2) {
-                        }
-                        var article = articleLst[j];
-                        var url = 'http://en.wikipedia.org/wiki/' + article;
-                        newInfo = newInfo.concat('<li> <a href="' + url + '">' + article + '</a></li>');
+            }).done(function (response) {
+                // replace wikInfo
+                var newInfo = self.places()[index].wikiInfo();
+                newInfo = newInfo.concat('<ul style="padding-left: 16px;">');
+                var articleLst = response[1];
+                for (var j = 0; j < articleLst.length; j++) {
+                    if (j > 2) {
                     }
-                    newInfo = newInfo.concat('</ul>');
-                    self.places()[index].wikiInfo(newInfo);
+                    var article = articleLst[j];
+                    var url = 'http://en.wikipedia.org/wiki/' + article;
+                    newInfo = newInfo.concat('<li> <a href="' + url + '">' + article + '</a></li>');
                 }
+                newInfo = newInfo.concat('</ul>');
+                self.places()[index].wikiInfo(newInfo);
             }).fail(function() {
                 alert("There was an error with the MediaWiki call. Please refresh the page and try again.");
             });
         };
-
         for (var i = 0; i < self.places().length; i++) {
             var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + self.places()[i].name() + '&format=json&callback=wikiCallBack';
             wikipediaRequest(i);

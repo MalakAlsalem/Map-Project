@@ -1,12 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .container {
-height: 100%;
-margin-left: 10px;
-text-align: center;
+    height: 100%;
+    margin-left: 10px;
+    text-align: center;
 }
 
 #map { 
-    height: 100%;
-    max-width: 100% 
+    height: 100vh;
+    max-width: 100%; 
 }
 
 .content {
@@ -15,7 +21,7 @@ text-align: center;
 }
 
 .textInput {
-text-align: center;
+    text-align: center;
 }
 
 ul {

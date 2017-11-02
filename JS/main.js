@@ -38,7 +38,7 @@ var ViewModel = function () {
         });
 
         //Street View
-        this.streetViewImg = ko.observable('<img class="bgimg" src="http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + street + ', ' + city + '">');
+        this.streetViewImg = ko.observable('<img class="bgimg" src="http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + name + ', ' + street + '">');
 
         this.wikiInfo = ko.observable('');
 
@@ -55,15 +55,23 @@ var ViewModel = function () {
           '</div>';
         });
 
-        //show info window
+        //show Infwindow
         google.maps.event.addListener(this.marker, 'click', function () {
             self.getPlace();
+            self.marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function() {
+                self.marker.setAnimation(null);
+            }, 200);
         });
 
         this.getPlace = function () {
             map.setCenter(self.marker.getPosition());
             ShowInfo.setContent(self.info());
             ShowInfo.open(map, self.marker);
+            self.marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function() {
+                self.marker.setAnimation(null);
+            }, 200);
         };
 
         // Set marker map
@@ -74,9 +82,7 @@ var ViewModel = function () {
     this.placesList = function () {
 
         var arrPlaces = [];
-
-        // Instantiate all locations
-        arrPlaces.push(ko.observable(new self.Place('Princess Nourah Bint Abdulrahman University', 24.846461, 46.724731, 'Airport Road, Al Narjis', 'Riyadh')));
+        arrPlaces.push(ko.observable(new self.Place('Princess Nourah Bint Abdulrahman University', 24.846461, 46.724731, 'Al Imam Abdullah Ibn Saud Ibn Abdul Aziz Road', 'Riyadh')));
 
         arrPlaces.push(ko.observable(new self.Place('King Saud University', 24.716241, 46.619108, 'King Khalid Road', 'Riyadh')));
 
@@ -90,7 +96,6 @@ var ViewModel = function () {
     };
     this.placeslst = ko.observable(this.placesList());
 
-    // Initial value for search input
     var searchName = '';
 
     // Search place
@@ -126,11 +131,6 @@ var ViewModel = function () {
     //wikipedia information
     this.wikipedia = function () {
         var wikipediaRequest = function (index) {
-
-            var wikiRequestTimeout = setTimeout(function () {
-                self.places()[index].wikiInfo('No Wiki info to dispay.<br>');
-            }, 1000);
-
             // Request
             $.ajax({
                 url: wikiUrl,
@@ -138,7 +138,6 @@ var ViewModel = function () {
                 success: function (response) {
                     // replace wikInfo
                     var newInfo = self.places()[index].wikiInfo();
-                    newInfo = 'Wikipedia:';
                     newInfo = newInfo.concat('<ul style="padding-left: 16px;">');
                     var articleLst = response[1];
                     for (var j = 0; j < articleLst.length; j++) {
@@ -148,13 +147,13 @@ var ViewModel = function () {
                         var url = 'http://en.wikipedia.org/wiki/' + article;
                         newInfo = newInfo.concat('<li> <a href="' + url + '">' + article + '</a></li>');
                     }
-                    clearTimeout(wikiRequestTimeout);
                     newInfo = newInfo.concat('</ul>');
                     self.places()[index].wikiInfo(newInfo);
                 }
+            }).fail(function() {
+                alert("There was an error with the MediaWiki call. Please refresh the page and try again.");
             });
         };
-
 
         for (var i = 0; i < self.places().length; i++) {
             var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + self.places()[i].name() + '&format=json&callback=wikiCallBack';
@@ -162,6 +161,11 @@ var ViewModel = function () {
         }
     };
     this.wikipedia();
+};
+
+// Error function
+function mapError () {
+  alert("Failed to load. Please check your internet connection and try again");
 };
 
 $(document).ready(function () {

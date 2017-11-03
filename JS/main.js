@@ -168,5 +168,4 @@ function ready( jQuery ) {
     if (mapView()) {
         ko.applyBindings(new ViewModel());
     }
-} 
-$( document ).ready( ready );
+}

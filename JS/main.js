@@ -2,7 +2,7 @@ var map;
 var showInfo;
 
 //View Map
-var MapView = function () {
+var mapView = function () {
 
     // set the map center
     map = new google.maps.Map(document.getElementById('map'), {
@@ -164,8 +164,9 @@ function mapError () {
   alert("Failed to load. Please check your internet connection and try again");
 }
 
-$(document).ready(function () {
-    if (MapView()) {
+function ready( jQuery ) {
+    if (mapView()) {
         ko.applyBindings(new ViewModel());
     }
-});
+} 
+$( document ).ready( ready );

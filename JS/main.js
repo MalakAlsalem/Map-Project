@@ -7,7 +7,7 @@ var mapView = function () {
     // set the map center
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 24.765205, lng: 46.677100 },
-        zoom: 12,
+        zoom: 11,
     });
 
     // infowindow
@@ -36,7 +36,7 @@ var ViewModel = function () {
         });
 
         //Street View
-        this.streetViewImg = ko.observable('<img class="bgimg" src="http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + name + ', ' + street + '">');
+        this.streetViewImg = ko.observable('<img class="bgimg" src="http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + lat + ', ' + lng + '">');
 
         this.wikiInfo = ko.observable('');
 
@@ -80,13 +80,13 @@ var ViewModel = function () {
     this.placesList = function () {
 
         var arrPlaces = [];
-        arrPlaces.push(ko.observable(new self.Place('Princess Nourah Bint Abdulrahman University', 24.846461, 46.724731, 'Al Imam Abdullah Ibn Saud Ibn Abdul Aziz Road', 'Riyadh')));
+        arrPlaces.push(ko.observable(new self.Place('Al Faisaliah Mall', 24.689536, 46.685833, 'Olaya Street', 'Riyadh')));
 
-        arrPlaces.push(ko.observable(new self.Place('King Saud University', 24.716241, 46.619108, 'King Khalid Road', 'Riyadh')));
+        arrPlaces.push(ko.observable(new self.Place('Kingdom Centre', 24.712045, 46.675962, 'Olaya Street', 'Riyadh')));
 
-        arrPlaces.push(ko.observable(new self.Place('Imam Muhammad ibn Saud Islamic University', 24.814587, 46.711373, 'Airport Road', 'Riyadh')));
+        arrPlaces.push(ko.observable(new self.Place('King Abdullah City for Atomic and Renewable Energy', 24.707866, 46.679116, 'Olaya Street', 'Riyadh')));
 
-        arrPlaces.push(ko.observable(new self.Place('Prince Sultan University', 24.735681, 46.699572, 'Prince Nasser Bin Farhan st', 'Riyadh')));
+        arrPlaces.push(ko.observable(new self.Place('Princess Nora bint Abdul Rahman University', 24.846461, 46.724731, 'Prince Nasser Bin Farhan st', 'Riyadh')));
 
         arrPlaces.push(ko.observable(new self.Place('Dar Al Uloom University', 24.795804, 46.711291, 'Al Mizan st', 'Riyadh')));
 
